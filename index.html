@@ -33,7 +33,7 @@
   }
 
   #game-container {
-    width: 100vw; height: 100vh;
+    width: 100vw; height: 100vh; height: 100dvh;
     display: flex;
     flex-direction: column;
     max-width: 480px;
@@ -1545,7 +1545,16 @@ function startGame() {
   });
 }
 
-window.addEventListener('resize', resizeCanvas);
+// スマホのアドレスバー考慮した高さ調整
+function fixHeight() {
+  const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  document.getElementById('game-container').style.height = h + 'px';
+}
+fixHeight();
+window.addEventListener('resize', () => { fixHeight(); resizeCanvas(); });
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => { fixHeight(); resizeCanvas(); });
+}
 </script>
 </body>
 </html>
